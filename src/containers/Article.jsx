@@ -1,23 +1,27 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import Article from "../components/Article";
-export default connect(
-    state=>{
-        let title,desc;
-        if(state.mode === 'WELCOME'){
-            title = state.welcome.title;
-            desc = state.welcome.desc;
-        } else {
-            for(let i=0;i<state.topics.length;i++){
-                const d = state.topics[i];
-                if(d.id === state.id){
-                    title = d.title;
-                    desc = d.desc;
-                    break;
-                } 
-            }
-        }
-        return {
-            title,desc
+export default function ArticleContainer(){
+    const mode = useSelector(state=>state.mode);
+    const welcome = useSelector(state=>state.welcome);
+    const topics = useSelector(state=>state.topics);
+    const id = useSelector(state=>state.id);
+    let title,desc;
+    if(mode === 'WELCOME'){
+        title = welcome.title;
+        desc = welcome.desc;
+    } else {
+        for(let i=0;i<topics.length;i++){
+            const d = topics[i];
+            if(d.id === id){
+                title = d.title;
+                desc = d.desc;
+                break;
+            } 
         }
     }
-)(Article);
+    return (
+        <div>
+            <Article title={title} desc={desc}></Article>
+        </div>
+    );
+}

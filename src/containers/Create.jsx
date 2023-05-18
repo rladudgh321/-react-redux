@@ -1,13 +1,13 @@
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import Create from "../components/Create";
 
-export default connect(
-    null,
-    dispatch=>{
-        return {
-            onCreate : (title,desc)=>{
+export default function CreateContainer(){
+    const dispatch = useDispatch();
+    return (
+        <div>
+            <Create onCreate={(title,desc)=>{
                 dispatch({type:'CREATE_PROCESS', title,desc});
-            }
-        }
-    }
-)(Create);
+            }}></Create>
+        </div>
+    );
+}
